@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>SecureMed</title>
+  <!-- MDB icon -->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="static/css/mdb.min.css" />
+  <link href="static/style2.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="">
+    <!-- Just an image -->
+    <nav class="navbar navbar-dark bg-dark" style="height: 55px">
+      <div class="container">
+        <div style="float: left; margin-top:-30px">
+          <a style="font-weight: bold;" class='text-light' id="head">SecureMed</a>
+        </div>
+        <div style="float: right;">
+          <button class="btn btn_1" id="logbtn">Login</button>
+          <button class="btn btn_1" id="regbtn">Register</button>
+          <button class="btn btn_1" id="aboutbtn">About Us</button>
+        </div>
+      </div>
+    </nav>
+
+    <div id="logreg" align="center">
+      <div class="container-fluid">
+        <div class="col-lg-8 mx-auto" style="margin-top:80px;" id="logdiv">
+          <div class="form-outline">
+            <input type="text" id="uname" class="form-control forms2" />
+            <label class="form-label" for="uname">Username</label>
+          </div>
+          <div class="form-outline">
+            <input type="password" id="pswd" class="form-control forms2" />
+            <label class="form-label" for="pswd">Password</label>
+          </div>
+          <button class="btn btn-block bg-dark text-light" style="margin-top:15px" id="login">Login</button>
+        </div>
+
+        <div class="col-lg-8 mx-auto" style="display: none; margin-top:40px" id="regdiv">
+          <div class="form-outline">
+            <input type="text" id="fname" class="form-control forms2" />
+            <label class="form-label" for="fname">Full Name</label>
+          </div>
+          <div class="form-outline">
+            <input type="text" id="uname2" class="form-control forms2" />
+            <label class="form-label" for="uname2">Username</label>
+          </div>
+          <div class="form-outline">
+            <input type="password" id="pswd2" class="form-control forms2" />
+            <label class="form-label" for="pswd2">Password</label>
+          </div>
+          <div class="form-outline">
+            <input type="password" id="cpswd2" class="form-control forms2" />
+            <label class="form-label" for="cpswd2">Confirm Password</label>
+          </div>
+          <button class="btn btn-block bg-dark text-light" style="margin-top:15px" id="register">Register</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card" id="aboutdiv">
+      <div class="col-lg-10 mx-auto" align="center" id="aboutdiv2">
+        SecureMed ensures the highest level of privacy for your healthcare data in the cloud. Our advanced pairing-based cryptography technology guarantees confidentiality while managing sensitive medical information. With secure storage, analysis, and sharing capabilities, our platform empowers healthcare organizations and individuals without compromising data integrity. We prioritize privacy and comply with regulatory standards, offering a trusted solution for managing healthcare data. Join SecureMed today and enjoy the peace of mind that comes from knowing your data is protected. Together, let's create a secure future for cloud-based healthcare data management.
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="static/js/mdb.min.js"></script>
+  <!-- Custom scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    
+    $("#logbtn").click(function () {
+      $("#regdiv").css("display", "none")
+      $("#logdiv").css("display", "block")
+      $("#aboutdiv").slideUp("slow")
+      $("#logreg").slideDown("slow")
+    })
+
+    $("#regbtn").click(function () {
+      $("#logdiv").css("display", "none")
+      $("#regdiv").css("display", "block")
+      $("#aboutdiv").slideUp("slow")
+      $("#logreg").slideDown("slow")
+    })
+
+
+    $("#homebtn").click(function () {
+      $("#aboutdiv").slideUp("slow")
+      $("#logreg").slideDown("slow")
+    })
+
+    $("#aboutbtn").click(function () {
+      $("#logreg").slideUp("slow")
+      $("#aboutdiv").slideDown("slow")
+    })
+
+
+    $("#login").click(function () {
+
+      let uname = $("#uname").val()
+      let pswd = $("#pswd").val()
+
+      if (uname != "" || pswd != "") {
+        $.ajax({
+          url: "/login",
+          method: "POST",
+          data: {
+            uname: uname,
+            pswd: pswd
+          },
+          success: function (response) {
+            if (response.success){
+              window.location.href = response.redirect;
+            }else{
+              alert(response)
+            }
+          }
+        })
+        
+      } else { 
+        alert("Please fill in all the required fields")
+      }
+
+    })
+
+
+    $("#register").click(function () {
+      let fname = $("#fname").val()
+      let uname2 = $("#uname2").val()
+      let pswd2 = $("#pswd2").val()
+      let cpswd2 = $("#cpswd2").val()
+
+      if (uname2 != "" && pswd2 != "" && fname != "") {
+        if (pswd2 == cpswd2) {
+          $.ajax({
+            url: "/register",
+            method: "POST",
+            data: {
+              uname: uname2,
+              pswd: pswd2,
+              fname: fname,
+            },
+            success: function (response) {
+              alert(response)
+            }
+          })
+        }
+        else {
+          alert("Mismatching password!")
+        }
+        
+      } else {
+        alert("Please fill in all the required fields")
+      }
+
+    })
+
+    
+
+  </script>
+
+</body>
+
+</html>

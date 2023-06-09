@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>SecureMed</title>
+    <!-- MDB icon -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="static/css/mdb.min.css" />
+    <link href="static/style2.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-light bg-dark" style="height: 55px">
+        <div class="container">
+            <div style="float: left; margin-top:-30px;">
+                <a style="font-weight: bold;" id="head" class="text-light">SecureMed</a>
+            </div>
+            <div style="float: right;">
+                <button class="btn btn_1" id="logoutbtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- MDB -->
+    <script type="text/javascript" src="static/js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include MDB Bootstrap JS and Chart.js -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+
+        $("#logoutbtn").click(function () {
+            $.ajax({
+                url: "/logout",
+                success: function (response) {
+                    window.location.href = response.redirect
+                }
+            })
+        })
+
+    </script>
+
+</body>
+
+</html>
